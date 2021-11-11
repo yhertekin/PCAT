@@ -19,7 +19,11 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(fileUpload());
-app.use(methodOverride("_method"));
+app.use(
+	methodOverride("_method", {
+		methods: ["POST", "GET"],
+	})
+);
 
 app.get("/", async (req, res) => {
 	const photos = await Photo.find({}).sort("-dateCreated");
@@ -69,6 +73,14 @@ app.put("/photos/:id", async (req, res) => {
 	photo.description = req.body.description;
 	photo.save();
 	res.redirect(`/photos/${photo._id}`);
+});
+
+app.delete("/photos/:id", async (req, res) => {
+	const photo = await Photo.findById(req.params.id);
+	const deletedPhoto = __dirname + "/public" + photo.image;
+	fs.unlinkSync(deletedPhoto);
+	await Photo.findByIdAndRemove(req.params.id);
+	res.redirect("/");
 });
 
 const port = 3000;
