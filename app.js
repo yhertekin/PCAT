@@ -11,9 +11,7 @@ const pageController = require("./controllers/pageController");
 
 const app = express();
 // connect database
-mongoose.connect(
-	"mongodb+srv://yhertekin:vSxD5doWm92JUE64@cluster0.fof72.mongodb.net/pcat?retryWrites=true&w=majority"
-);
+mongoose.connect("Add Your Connection String");
 
 app.set("view engine", "ejs");
 
