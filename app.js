@@ -38,7 +38,7 @@ app.get("/add", pageController.getAddPage);
 app.get("/about", pageController.getAboutPage);
 app.get("/photos/edit/:id", pageController.getEditPage);
 
-const port = 3000;
+const port = process.env.PORT;
 app.listen(port, () => {
 	console.log(`Server started at port: ${port}`);
 });
